@@ -154,6 +154,61 @@ function delete_post($id) {
 }
 $autorska_Czat = new autorska_Czat();
 
+add_action( 'widgets_init', 'autorska_register_widget' );
+
+function autorska_register_widget() {
+    register_widget( 'autorska_Widget');
+}
+
+class autorska_Widget extends WP_Widget {
+    function autorska_Widget() {
+        // tablica opcji.
+        $widget_ops = array(
+            'classname' => 'autorska_Widget', //nazwa klasy widgetu
+            'description' => 'autorska Czat', //opis widoczny w panelu
+        );
+        //ładowanie
+        parent::__construct( 'autorska_Widget', 'autorska Czat', $widget_ops );
+    }
+    function form($instance) {
+        ?>
+        <p>
+            Widget wyświetlający czat.
+        </p>
+        <?php
+    }
+    function update($new_instance, $old_instance) {
+        return $old_instance;
+    }
+
+    function widget($args, $instance){
+        global $autorska_Czat;
+        echo $args['before_widget'];
+        if (isset($_POST['post_content'])) {
+            $autorska_Czat->add_post($_POST['post_content']);
+        }
+        if (is_user_logged_in()) {
+            echo '<form method="POST">
+                <input type="hidden" name="autorska_action" value="add"/>
+                <label for="post_content">Treść</label><br>
+                <input type="text" name="post_content" value="" placeholder="Treść posta"/>
+                <input type="submit" value="Napisz" class="button-primary"/>
+            </form>';
+        }
+        echo '<table>';
+        $autorska_posts = $autorska_Czat->get_autorska_posts();
+        if ($autorska_posts) {
+            foreach ($autorska_posts as $autorska_p) {
+                echo '<tr>';
+                echo '<td>' . $autorska_p->create_date . ' <br> ' . $autorska_p->post_content . '</td>';
+                echo '</tr>';
+            }
+        }
+        echo '</table>';
+        echo $args['after_widget'];
+    }
+
+}
 // rejestracja kodu autorska_activation w którym utworzymy tabelę
 register_activation_hook(__FILE__, 'autorska_activation');
 
