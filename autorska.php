@@ -48,6 +48,11 @@ function autorska_glowna(){
             $notice = '<div class="notice notice-error">Nie usunięto wiadomość o id: ' . $_POST['autorska_post_id'] . '</div>';
         }
     }
+    //pobieram wiadomość do edycji
+$edit = FALSE;
+if(isset($_POST['autorska_to_edit'])) {
+    $edit = $this->get_autorska_post($_POST['autorska_post_id']);
+}
     //utworzenie formularza
     ?>
 
@@ -69,21 +74,86 @@ function autorska_glowna(){
         <input type="submit" value="<?= $edit ? 'Edytuj' : 'Dodaj'; ?> post" class="button-primary"/>
     </form>    
     <?php
-    function add_post($post_content) {
-        //sprawdzam czy nie pusty i czy jest zalogowany
-        if(trim($post_content) != '' && is_user_logged_in()){
-            $user_id = get_current_user_id();
-            $post_content = esc_sql($post_content);
-            $this->wpdb->insert( $this->table_name, array('user_id' => $user_id, 'post_content' => $post_content) );
-            return TRUE;
+    $all_posts = $this->get_autorska_posts();
+    if ($all_posts) {
+        echo '<table class="widefat">';
+        echo '<thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Użytkownik</th>
+                                <th>Wiadomość</th>
+                                <th>Data</th>
+                                <td>Opcje</td>
+                            </tr>
+                        </thead>';
+        echo '<tbody>';
+        foreach ($all_posts as $p) {
+            echo '<tr>';
+            echo '<td>' . $p->id . '</td>';
+            echo '<td>' . $p->user_id . '</td>';
+            echo '<td>' . $p->post_content . '</td>';
+            echo '<td>' . $p->create_date . '</td>';
+            echo '<td><form method="POST">
+                                <input type="hidden" name="autorska_post_id" value="' . $p->id . '" />
+                                <input type="submit" name="autorska_to_edit" value="Edytuj" class="button-primary" />
+                                <input type="submit" name="autorska_delete" value="Usuń" class="button-primary error" />
+                            </form></td>';
+            echo '</tr>';
         }
-        return FALSE;
+        echo '</tbody>';
+        echo '</table>';
+    }
+    ?>
+    </div>
+<?php
+}
+function add_post($post_content) {
+    //sprawdzenie, czy nie pusty i czy uzytkownik jest zalogowany
+    if(trim($post_content) != '' && is_user_logged_in()){
+        $user_id = get_current_user_id();
+        $post_content = esc_sql($post_content);
+        $this->wpdb->insert( $this->table_name, array('user_id' => $user_id, 'post_content' => $post_content) );
+        return TRUE;
+    }
+    return FALSE;
 }
 //funkcja zwracająca tablicę wiadomości ograniczona do 50 rekordów
 function get_autorska_posts() {
     return $this->wpdb->get_results("SELECT * FROM $this->table_name ORDER BY create_date DESC LIMIT 0,50");
 }
+//funkcja pobiera wiadomość i zwraca obiekt
+function get_autorska_post($id) {
+    $id = esc_sql($id);
+    $autorska_post = $this->wpdb->get_results("SELECT * FROM $this->table_name WHERE id = '" . $id . "'");
+    if(isset($autorska_post[0])){
+        return $autorska_post[0];
+    } else {
+        return FALSE;
+    }
 }
+//edycja wiadomości zczytuje id i treść wiadomości
+function edit_post($id, $content){
+    if(trim($content) != '' && is_user_logged_in()) {
+        $id = esc_sql($id);
+        $content = esc_sql($content);
+        $res = $this->wpdb->update($this->table_name, array('post_content' => $content), array('id' => $id));
+        return $res;
+    }else {
+        return FALSE;
+    }
+}
+//usuwanie wiadomości
+function delete_post($id) {
+    $id = esc_sql($id);
+    if(is_user_logged_in()) {
+        return $this->wpdb->delete($this->table_name, array('id' => $id));
+    } else {
+        return FALSE;
+    }
+}
+}
+$autorska_Czat = new autorska_Czat();
+
 // rejestracja kodu autorska_activation w którym utworzymy tabelę
 register_activation_hook(__FILE__, 'autorska_activation');
 
