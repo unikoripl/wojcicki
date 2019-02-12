@@ -2,9 +2,13 @@ Imiê i Nazwisko autora: Jan Wójcicki
 email kontaktowy: jan.wojcicki@op.pl
 nr. albumu: 10277
 
-Build do testów w postaci dzia³aj¹cej witryny internetowej w sieci: https://inzynierska111.pl/
+Build do testów w postaci dzia³aj¹cej witryny internetowej w sieci: 
+https://inzynierska111.pl/
+https://inzynierska112.pl/
+https://inzynierska113.pl/
 
 Opis: Wtyczka do Wordpress'a pozwalaj¹ca prowadziæ konwersacjê z u¿ytkownikami odwiedzaj¹cymi stronê internetow¹ w formie chatu. 
+Stworzy³em równie¿ 3 poprawnie wypozycjonowane strony pod k¹tem SEO on-page oparte na systemie CMS Wordpress.
 
 Funkcjonalnoœci wtyczki: Mo¿liwoœæ dodawania treœci przez u¿ytkowników na stronie w formie chatu opartego o bazê danych. Administrator ma mo¿liwoœæ usuwania oraz edycji wiadomoœci.
 
