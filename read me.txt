@@ -2,15 +2,12 @@ Imiê i Nazwisko autora: Jan Wójcicki
 email kontaktowy: jan.wojcicki@op.pl
 nr. albumu: 10277
 
-Build do testów w postaci dzia³aj¹cej witryny internetowej w sieci: 
-https://inzynierska111.pl/
-https://inzynierska112.pl/
-https://inzynierska113.pl/
+Build do testów w postaci dzia³aj¹cej witryny internetowej w sieci: https://inzynierska111.pl/
 
 Opis: Wtyczka do Wordpress'a pozwalaj¹ca prowadziæ konwersacjê z u¿ytkownikami odwiedzaj¹cymi stronê internetow¹ w formie chatu. 
-Stworzy³em równie¿ 3 poprawnie wypozycjonowane strony pod k¹tem SEO on-page oparte na systemie CMS Wordpress.
 
-Funkcjonalnoœci wtyczki: Mo¿liwoœæ dodawania treœci przez u¿ytkowników na stronie w formie chatu opartego o bazê danych. Administrator ma mo¿liwoœæ usuwania oraz edycji wiadomoœci.
+Funkcjonalnoœci wtyczki: Mo¿liwoœæ dodawania treœci przez u¿ytkowników na stronie w formie chatu opartego o bazê danych. 
+Administrator ma mo¿liwoœæ usuwania oraz edycji wiadomoœci.
 
 Roadmap:
 1. Stworzenie tabeli i dodanie mo¿liwoœci usuwania jej
@@ -18,3 +15,16 @@ Roadmap:
 3. Zwracanie danych z tabeli i czêœæ stylistyczna
 4. Funkcja pozwalaj¹ca na edycjê wiadomoœci i funkcja pozwalaj¹ca na usuwanie wiadomoœci
 5. Stworzenie widgetu na stronie
+
+Specyfikacja techniczna pocz¹tkowa: 
+1. Wykupienie serwera i hostingu
+2. Stworzenie bazy danych
+3. Instalacja systemu Wordpress
+4. Stworzenie trzech strzon internetowych
+5. Wypozycjonowanie ich u¿ywaj¹c aplikacji internetowych GTMetrix, Google Page Speed Insight, Google Analytics, Google Search Console, Seoaudyt.clearsence i innych
+6. Stworzenie wtyczki i zainstalowanie jej na serwerze
+7. Stworzenie bazy danych do wtyczki
+8. Stworznie tabeli
+9. Mo¿liwoœæ zwracania danych z tabeli
+10. funkcja pozwalaj¹ca na edycjê i usuwanie wiadomoœci
+11. Stworzenie widgetu na stronie
